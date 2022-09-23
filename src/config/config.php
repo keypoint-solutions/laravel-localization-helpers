@@ -16,9 +16,11 @@ return [
     | No error or exception is thrown when a folder does not exist.
     |
     */
-    'folders'                  => [
-        '%APP/views',
-        '%APP/controllers',
+    'folders' => [
+        'app/Http/Controllers',
+        'app/Http/Middleware',
+        'resources/js',
+        'resources/views',
     ],
 
     /*
@@ -32,7 +34,7 @@ return [
     | - a specific file path like '/resources/lang/de/cms.php'
     |
     */
-    'ignore_lang_files'        => [
+    'ignore_lang_files' => [
         'validation',
     ],
 
@@ -47,7 +49,7 @@ return [
     | - then  in base_path() . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'lang',
     |
     */
-    'lang_folder_path'         => null,
+    'lang_folder_path' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -58,12 +60,16 @@ return [
     | Several regular expressions can be used for a single method or function.
     |
     */
-    'trans_methods'            => [
-        'trans'        => [
+    'trans_methods' => [
+        'php' => [
+            '@__\(\s*(\'.*\')\s*(,.*)*\)@U',
+            '@__\(\s*(".*")\s*(,.*)*\)@U',
+        ],
+        'trans' => [
             '@trans\(\s*(\'.*\')\s*(,.*)*\)@U',
             '@trans\(\s*(".*")\s*(,.*)*\)@U',
         ],
-        'Lang::Get'    => [
+        'Lang::Get' => [
             '@Lang::Get\(\s*(\'.*\')\s*(,.*)*\)@U',
             '@Lang::Get\(\s*(".*")\s*(,.*)*\)@U',
             '@Lang::get\(\s*(\'.*\')\s*(,.*)*\)@U',
@@ -77,15 +83,32 @@ return [
             '@Lang::choice\(\s*(\'.*\')\s*,.*\)@U',
             '@Lang::choice\(\s*(".*")\s*,.*\)@U',
         ],
-        '@lang'        => [
+        '@lang' => [
             '@\@lang\(\s*(\'.*\')\s*(,.*)*\)@U',
             '@\@lang\(\s*(".*")\s*(,.*)*\)@U',
         ],
-        '@choice'      => [
+        '@choice' => [
             '@\@choice\(\s*(\'.*\')\s*,.*\)@U',
             '@\@choice\(\s*(".*")\s*,.*\)@U',
         ],
+        '$t' => [
+            '@\$t\(\s*(\'.*\')\s*(,.*)*\)@U',
+            '@\$t\(\s*(".*")\s*(,.*)*\)@U',
+        ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | JSON languages
+    |--------------------------------------------------------------------------
+    |
+    | You must set languages you want to generate in JSON format
+    |
+    | JSON langages are supported since Laravel 5.4
+    | https://laravel.com/docs/5.4/localization#using-translation-strings-as-keys
+    |
+    */
+    'json_languages' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +134,7 @@ return [
     |   translation files.
     |
     */
-    'never_obsolete_keys'      => [
+    'never_obsolete_keys' => [
         'dynamic',
         'fields',
     ],
@@ -138,7 +161,7 @@ return [
     | clean up obsolete lemma manually
     |
     */
-    'obsolete_array_key'       => 'LLH:obsolete',
+    'obsolete_array_key' => 'LLH:obsolete',
 
     /*
     |--------------------------------------------------------------------------
@@ -148,7 +171,7 @@ return [
     | when using option editor, package will use this command to open your files
     |
     */
-    'editor_command_line'      => '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl',
+    'editor_command_line' => '/Applications/Sublime\\ Text.app/Contents/SharedSupport/bin/subl',
 
     /*
     |--------------------------------------------------------------------------
@@ -164,8 +187,10 @@ return [
     | ];
     |
     */
-    'code_style'               => [
-        'rules'  => null,
+    'code_style' => [
+        'rules' => [
+            'array_syntax' => ['syntax' => 'short'],
+        ],
     ],
 
     /*
@@ -176,7 +201,7 @@ return [
     | Use the Microsoft translator by default. This is the only translator available now
     |
     */
-    'translator'               => 'Microsoft',
+    'translator' => 'Microsoft',
 
     /*
     |--------------------------------------------------------------------------
@@ -208,10 +233,13 @@ return [
     | - LLH_MICROSOFT_TRANSLATOR_CLIENT_KEY
     |
     */
-    'translators'              => [
+    'translators' => [
         'Microsoft' => [
+            'api_base_url' => 'https://api.cognitive.microsofttranslator.com',
             'default_language' => null,
-            'client_key'       => null,
+            'client_key' => null,
+            'region' => null,
+            'api_version' => '3.0',
         ],
     ],
 
@@ -229,6 +257,5 @@ return [
     | This parameter will change nothing if you use the output-flat option of course
     |
     */
-    'dot_notation_split_regex' => null,
-
+    'dot_notation_split_regex' => '/\\.(?![^a-zA-Z]|$)/',
 ];

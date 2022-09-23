@@ -30,15 +30,10 @@ LLH is a set of artisan commands to manage translations in your Laravel project.
 
 - Choose your version according to the version compatibility matrix:
 
-| Laravel  | Lumen    | Package
-|:---------|:---------|:----------
-| 4.2.x    |          | 2.0.x (EOL last version is 2.0.4)
-| 5.0.x    |          | 2.1.x
-| 5.1.x    | 5.1.x    | 2.2.x
-| 5.2.x    | 5.2.x    | 2.3.x
-| 5.3.x    | 5.3.x    | 2.4.x
-| 5.4.x    | 5.4.x    | 2.5.x
-| 5.5.x    | 5.5.x    | 2.6.x
+| Laravel | Lumen | Package
+|:--------|:------|:----------
+| 8.0.x   | 8.0.x | main
+| 9.0.x   | 9.0.x | main
 
 - Add the following line in the `require-dev` array of the `composer.json` file and replace the version if needed according to your Laravel version:
     ```php
@@ -46,34 +41,10 @@ LLH is a set of artisan commands to manage translations in your Laravel project.
     ```
 
 - Update your installation : `composer update`
-
-- For Laravel, add the following lines in the `AppServiceProvider` array of the `config/app.php` configuration file :
+- For Laravel, add the following line in the `providers` array of the `config/app.php` configuration file :
     ```php
     Potsky\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProvider::class,
     ```
-
-	On Laravel 5.5, if you don't use the package in production, disable auto-loading and register it only on `local` or `dev`: 
-
-	- Add the following lines in the `register` method of the `AppServiceProvider` :
-		```php
-		public function register()
-		{
-			if ($this->app->environment() === 'dev') { // or local or whatever
-				$this->app->register(\Potsky\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProvider::class);
-			}
-		}
-		```
-
-    - Disable to auto-register provider by adding these lines in the `composer.json` file:
-		```php
-		"extra" : {
-			"laravel" : {
-				"dont-discover" : [
-					"potsky/laravel-localization-helpers"
-				]
-			}
-		}
-		```
 
 - For Lumen, add the following lines in the `bootstrap/app.php` file :
 	```php

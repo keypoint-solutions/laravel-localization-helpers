@@ -1,36 +1,32 @@
 {
-  "name"              : "potsky/laravel-localization-helpers",
-  "description"       : "An artisan command package for easy translation management",
-  "authors"           : [
+  "name": "keypoint/laravel-localization-helpers",
+  "description": "An artisan command package for easy translation management",
+  "authors": [
     {
-      "name" : "Potsky"
+      "name": "Potsky"
     }
   ],
-  "license"           : "GPL-3.0+",
-  "require"           : {
-    "illuminate/support"                  : "5.5.*",
-    "friendsofphp/php-cs-fixer"           : "^2.6",
-    "potsky/microsoft-translator-php-sdk" : "*"
+  "license": "GPL-3.0+",
+  "require": {
+    "illuminate/support": "^8.0|^9.0",
+    "friendsofphp/php-cs-fixer": "^3.0"
   },
-  "require-dev"       : {
-    "orchestra/testbench"    : "3.5.*",
-    "phpunit/phpunit"        : "^6.0",
-    "satooshi/php-coveralls" : "dev-master"
+  "require-dev": {
+    "orchestra/testbench": "^7.0",
+    "phpunit/phpunit": "^9.0",
+    "php-coveralls/php-coveralls": "dev-master"
   },
-  "autoload"          : {
-    "classmap" : [
-      "src/migrations"
-    ],
-    "psr-0"    : {
-      "Potsky\\LaravelLocalizationHelpers\\" : "src/"
+  "autoload": {
+    "psr-0": {
+      "Keypoint\\LaravelLocalizationHelpers\\": "src/"
     }
   },
-  "minimum-stability" : "stable",
+  "minimum-stability": "stable",
   "extra": {
-        "laravel": {
-            "providers": [
-                "Potsky\\LaravelLocalizationHelpers\\LaravelLocalizationHelpersServiceProvider"
-            ]
-        }
+    "laravel": {
+      "providers": [
+        "Keypoint\\LaravelLocalizationHelpers\\LaravelLocalizationHelpersServiceProvider"
+      ]
     }
+  }
 }
