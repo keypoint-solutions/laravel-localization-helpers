@@ -41,8 +41,6 @@ class Client
      *                                 not exceed 10000 characters.
      * @param string $to Required. A string representing the language code to translate the text into.
      * @param string|null $from Optional. A string representing the language code of the translation text.
-     * @param string $contentType Optional. The format of the text being translated. The supported formats are
-     *                                 "plain" and "html". Any HTML needs to be well-formed.
      * @param string $category Optional. A string containing the category (domain) of the translation. Defaults
      *                                 to "general".
      *
@@ -53,13 +51,14 @@ class Client
      * @return string|array
      * @throws \Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\Exception
      */
-    public function translate(string|array $text, string $to, ?string $from = null, string $contentType = 'plain', string $category = 'general'): string|array
+    public function translate(string|array $text, string $to, ?string $from = null, string $category = 'general'): string|array
     {
+        // make :parameter not translatable
         $queryParameters = [
-            'text' => $text,
+            'text' => preg_replace('/(:[a-zA-Z0-9_.-]+)/', '<span class="notranslate">$1</span>', $text),
             'from' => $from ?: self::getDefaultLanguage(),
             'to' => $to,
-            'textType' => $contentType,
+            'textType' => 'html',
             'category' => $category,
         ];
 
@@ -72,7 +71,9 @@ class Client
 
         $response = $this->post($endpoint, [], $queryParameters + self::getHttpConfig());
 
-        return is_array($text) ? $response['http_body'] : head($response['http_body']);
+        $translation = array_map(fn($t) => preg_replace('/<span class="notranslate">(.+?)<\/span>/', '$1', $t), $response['http_body']);
+
+        return is_array($text) ? $translation : head($translation);
     }
 
     public static function getDefaultLanguage()

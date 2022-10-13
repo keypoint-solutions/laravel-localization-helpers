@@ -74,27 +74,6 @@ abstract class LangFileAbstract
     /**
      * @return string
      */
-    public function getFilePath()
-    {
-        return $this->filePath;
-    }
-
-    /**
-     * @param string $filePath
-     *
-     * @return LangFileAbstract
-     */
-    public function setFilePath($filePath)
-    {
-        $this->filePath = $filePath;
-        $this->shortFilePath = str_replace(base_path(), '', $filePath);
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getShortFilePath()
     {
         return $this->shortFilePath;
@@ -188,13 +167,33 @@ abstract class LangFileAbstract
         return dirname($this->filePath);
     }
 
-
     /**
      * @return bool
      */
     public function isFolderWritable()
     {
         return is_writable(dirname($this->getFilePath()));
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilePath()
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * @param string $filePath
+     *
+     * @return LangFileAbstract
+     */
+    public function setFilePath($filePath)
+    {
+        $this->filePath = $filePath;
+        $this->shortFilePath = str_replace(base_path(), '', $filePath);
+
+        return $this;
     }
 
     /**
@@ -209,14 +208,6 @@ abstract class LangFileAbstract
         }
 
         return mkdir($dir);
-    }
-
-    /**
-     * @return bool
-     */
-    public function fileExists()
-    {
-        return file_exists($this->getFilePath());
     }
 
     /**
@@ -250,10 +241,23 @@ abstract class LangFileAbstract
     {
         if ($this->fileExists()) {
             /** @noinspection PhpIncludeInspection */
+
+            if ($this->typeJson) {
+                return json_decode(file_get_contents($this->filePath), true);
+            }
+
             return include($this->filePath);
         } else {
             return null;
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function fileExists()
+    {
+        return file_exists($this->getFilePath());
     }
 
 }

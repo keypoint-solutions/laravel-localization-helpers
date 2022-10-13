@@ -255,7 +255,9 @@ class LocalizationMissing extends LocalizationAbstract
              * Parse now all extracted families
              */
             foreach ($lemmas_structured as $family => $array) {
-                if ($family === Localization::JSON_HEADER) {
+                $needsJSONOutput = $family === Localization::JSON_HEADER;
+
+                if ($needsJSONOutput) {
                     $lang_file = new LangFileJson($dir_lang, $lang);
                 } else {
                     $lang_file = new LangFileGenuine($dir_lang, $lang, $family);
@@ -387,7 +389,7 @@ class LocalizationMissing extends LocalizationAbstract
                     $display_already_comment = true;
                     $something_to_do = true;
                     $there_are_new = true;
-                    $final_lemmas["KEYPOINT___NEW___KEYPOINT"] = "KEYPOINT___NEW___KEYPOINT";
+                    $final_lemmas["LLH___NEW___LLH"] = "LLH___NEW___LLH";
 
                     $this->writeInfo('        ' . ($c = count($welcome_lemmas)) . ' new string' . Tools::getPlural($c) . ' to translate');
 
@@ -396,7 +398,7 @@ class LocalizationMissing extends LocalizationAbstract
                             $this->writeLine("            <info>" . $key . "</info> in " . $this->manager->getShortPath($value));
                         }
                         if (!$this->option('no-comment')) {
-                            $final_lemmas['KEYPOINT___COMMENT___KEYPOINT' . $i] = "Defined in file $value";
+                            $final_lemmas['LLH___COMMENT___LLH' . $i] = "Defined in file $value";
                             $i = $i + 1;
                         }
 
@@ -430,7 +432,7 @@ class LocalizationMissing extends LocalizationAbstract
                         $this->writeLine('        ' . ($c = count($already_lemmas)) . ' already translated string' . Tools::getPlural($c));
                     }
 
-                    $final_lemmas["KEYPOINT___OLD___KEYPOINT"] = "KEYPOINT___OLD___KEYPOINT";
+                    $final_lemmas["LLH___OLD___LLH"] = "LLH___OLD___LLH";
 
                     foreach ($already_lemmas as $key => $value) {
                         Tools::arraySet($final_lemmas, $key, $value, $this->dot_notation_split_regex);
@@ -454,7 +456,7 @@ class LocalizationMissing extends LocalizationAbstract
                                 unset($obsolete_lemmas[$key]);
 
                                 if ($protected_already_included === false) {
-                                    $final_lemmas["KEYPOINT___PROTECTED___KEYPOINT"] = "KEYPOINT___PROTECTED___KEYPOINT";
+                                    $final_lemmas["LLH___PROTECTED___LLH"] = "LLH___PROTECTED___LLH";
                                     $protected_already_included = true;
                                 }
 
@@ -477,7 +479,7 @@ class LocalizationMissing extends LocalizationAbstract
                     } else {
                         $this->writeComment("        " . ($c = count($obsolete_lemmas)) . ' obsolete string' . Tools::getPlural($c) . ' (can be deleted manually in the generated file)');
 
-                        $final_lemmas["KEYPOINT___OBSOLETE___KEYPOINT"] = "KEYPOINT___OBSOLETE___KEYPOINT";
+                        $final_lemmas["LLH___OBSOLETE___LLH"] = "LLH___OBSOLETE___LLH";
 
                         foreach ($obsolete_lemmas as $key => $value) {
                             if ($this->option('verbose')) {
@@ -495,28 +497,39 @@ class LocalizationMissing extends LocalizationAbstract
                 }
 
                 if (($something_to_do === true) || ($this->option('force'))) {
-                    $content = var_export($final_lemmas, true);
-                    $content = preg_replace("@'KEYPOINT___COMMENT___KEYPOINT[0-9]*' => '(.*)',@", '// $1', $content);
-                    $content = str_replace([
-                        "'KEYPOINT___NEW___KEYPOINT' => 'KEYPOINT___NEW___KEYPOINT',",
-                        "'KEYPOINT___OLD___KEYPOINT' => 'KEYPOINT___OLD___KEYPOINT',",
-                        "'KEYPOINT___PROTECTED___KEYPOINT' => 'KEYPOINT___PROTECTED___KEYPOINT',",
-                        "'KEYPOINT___OBSOLETE___KEYPOINT' => 'KEYPOINT___OBSOLETE___KEYPOINT',",
-                    ], [
-                        '//============================== New strings to translate ==============================//',
-                        ($display_already_comment === true) ? '//==================================== Translations ====================================//' : '',
-                        '//============================== Dynamic protected strings =============================//',
-                        '//================================== Obsolete strings ==================================//',
-                    ], $content);
-
-                    $file_content = "<?php\n";
-
-                    if (!$this->option('no-date')) {
-                        $a = " Generated via \"php artisan " . $this->argument('command') . "\" at " . date("Y/m/d H:i:s") . " ";
-                        $file_content .= "/" . str_repeat('*', strlen($a)) . "\n" . $a . "\n" . str_repeat('*', strlen($a)) . "/\n";
+                    if ($needsJSONOutput) {
+                        $final_lemmas = Arr::except($final_lemmas, array_filter(array_keys($final_lemmas), fn($l) => str_starts_with($l, 'LLH___')));
                     }
 
-                    $file_content .= "\nreturn " . $content . ";";
+                    $content = $needsJSONOutput ? json_encode($final_lemmas, JSON_PRETTY_PRINT) : var_export($final_lemmas, true);
+
+                    if (!$needsJSONOutput) {
+                        $content = preg_replace("@'LLH___COMMENT___LLH[0-9]*' => '(.*)',@", '// $1', $content);
+                        $content = str_replace([
+                            "'LLH___NEW___LLH' => 'LLH___NEW___LLH',",
+                            "'LLH___OLD___LLH' => 'LLH___OLD___LLH',",
+                            "'LLH___PROTECTED___LLH' => 'LLH___PROTECTED___LLH',",
+                            "'LLH___OBSOLETE___LLH' => 'LLH___OBSOLETE___LLH',",
+                        ], [
+                            '//============================== New strings to translate ==============================//',
+                            ($display_already_comment === true) ? '//==================================== Translations ====================================//' : '',
+                            '//============================== Dynamic protected strings =============================//',
+                            '//================================== Obsolete strings ==================================//',
+                        ], $content);
+                    }
+
+                    if ($needsJSONOutput) {
+                        $file_content = $content;
+                    } else {
+                        $file_content = "<?php\n";
+
+                        if (!$this->option('no-date')) {
+                            $a = " Generated via \"php artisan " . $this->argument('command') . "\" at " . date("Y/m/d H:i:s") . " ";
+                            $file_content .= "/" . str_repeat('*', strlen($a)) . "\n" . $a . "\n" . str_repeat('*', strlen($a)) . "/\n";
+                        }
+
+                        $file_content .= "\nreturn " . $content . ";";
+                    }
                     $job[$lang_file->getFilePath()] = $file_content;
                 } else {
                     if ($this->option('verbose')) {

@@ -362,8 +362,8 @@ class Localization
                 base_path() . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'lang',
             ];
 
-            if (function_exists('app_path')) {
-                $paths[] = app_path() . DIRECTORY_SEPARATOR . 'lang';
+            if (function_exists('base_path')) {
+                $paths[] = base_path() . DIRECTORY_SEPARATOR . 'lang';
             }
 
             foreach ($paths as $path) {

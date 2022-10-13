@@ -92,8 +92,8 @@ return [
             '@\@choice\(\s*(".*")\s*,.*\)@U',
         ],
         '$t' => [
-            '@\$t\(\s*(\'.*\')\s*(,.*)*\)@U',
-            '@\$t\(\s*(".*")\s*(,.*)*\)@U',
+            '@(?:\$t|trans|wTrans|transChoice)\(\s*(\'.*\')\s*(,.*)*\)@U',
+            '@(?:\$t|trans|wTrans|transChoice)\(\s*(".*")\s*(,.*)*\)@U',
         ],
     ],
 
@@ -236,9 +236,9 @@ return [
     'translators' => [
         'Microsoft' => [
             'api_base_url' => 'https://api.cognitive.microsofttranslator.com',
-            'default_language' => null,
+            'default_language' => null, // ex. 'en'
             'client_key' => null,
-            'region' => null,
+            'region' => null, // ex. 'westeurope'
             'api_version' => '3.0',
         ],
     ],
@@ -257,5 +257,5 @@ return [
     | This parameter will change nothing if you use the output-flat option of course
     |
     */
-    'dot_notation_split_regex' => '/\\.(?![^a-zA-Z]|$)/',
+    'dot_notation_split_regex' => '/\\.(?=[^ .!?]|$)/',
 ];
