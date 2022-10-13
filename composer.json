@@ -1,6 +1,6 @@
 {
   "name": "schniper/laravel-localization-helpers",
-  "description": "An artisan command package and methods for easy translation management",
+  "description": "An artisan command package and methods for easy translation management. Derived from potsky's repo, adding PHP 8 / Laravel 8 & 9 support, updated MS translator support and other features",
   "authors": [
     {
       "name": "Potsky"
