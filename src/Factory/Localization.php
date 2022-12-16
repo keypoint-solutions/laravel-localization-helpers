@@ -1,6 +1,5 @@
 <?php namespace Keypoint\LaravelLocalizationHelpers\Factory;
 
-use Config;
 use Illuminate\Support\Arr;
 use ParseError;
 use RecursiveDirectoryIterator;
@@ -30,7 +29,7 @@ class Localization
     protected $codeStyler;
 
     /**
-     * @param \Keypoint\LaravelLocalizationHelpers\Factory\MessageBagInterface $messageBag A message bag or a Console
+     * @param \Factory\MessageBagInterface $messageBag A message bag or a Console
      *                                                                                   object for output reports
      */
     public function __construct(MessageBagInterface $messageBag)
@@ -42,7 +41,7 @@ class Localization
     /**
      * Get the current used message bag for facades essentially
      *
-     * @return \Keypoint\LaravelLocalizationHelpers\Factory\MessageBagInterface
+     * @return \Factory\MessageBagInterface
      */
     public function getMessageBag()
     {
@@ -353,7 +352,7 @@ class Localization
      * @param $lang_folder_path
      *
      * @return string the path
-     * @throws \Keypoint\LaravelLocalizationHelpers\Factory\Exception
+     * @throws \Factory\Exception
      */
     public function getLangPath($lang_folder_path = null)
     {

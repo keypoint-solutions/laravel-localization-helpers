@@ -34,13 +34,13 @@ class TranslatorMicrosoft implements TranslatorInterface
      * @param null $fromLang Source language (if set to null, translator will try to guess)
      *
      * @return string|array|null The translated sentence or null if an error occurs
-     * @throws \Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\Exception
+     * @throws \Translator\MicrosoftTranslator\Exception
      */
     public function translate(string|array $translatable, string $toLang, ?string $fromLang = null): string|array|null
     {
         try {
             return $this->msTranslator->translate($translatable, $toLang, $fromLang);
-        } catch (\Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\Exception $e) {
+        } catch (\Translator\MicrosoftTranslator\Exception $e) {
             if (!(strpos($e->getMessage(), 'Unable to generate a new access token') === false)) {
                 throw $e;
             }

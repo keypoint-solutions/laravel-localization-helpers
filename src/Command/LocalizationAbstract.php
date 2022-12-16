@@ -4,7 +4,6 @@ namespace Keypoint\LaravelLocalizationHelpers\Command;
 
 use Illuminate\Config\Repository;
 use Illuminate\Console\Command;
-use Keypoint\LaravelLocalizationHelpers\Factory\CodeStyle;
 use Keypoint\LaravelLocalizationHelpers\Factory\Localization;
 use Keypoint\LaravelLocalizationHelpers\Factory\MessageBagInterface;
 

@@ -5,7 +5,7 @@ class Client
     const VERSION = "1.0.0";
 
     /**
-     * @var \Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\HttpInterface
+     * @var \Translator\MicrosoftTranslator\HttpInterface
      *
      * This holds the HTTP Manager
      *
@@ -16,7 +16,7 @@ class Client
 
     /**
      * @param array $config an array of configuration parameters
-     * @param \Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\HttpInterface|null $http if null, a new Http manager will be used
+     * @param \Translator\MicrosoftTranslator\HttpInterface|null $http if null, a new Http manager will be used
      *
      * @throws Exception
      */
@@ -92,7 +92,7 @@ class Client
      * @param string|array $queryParameters
      *
      * @return array
-     * @throws \Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\Exception
+     * @throws \Translator\MicrosoftTranslator\Exception
      */
     private function post(string $endpoint, array $urlParameters = [], array $queryParameters = []): array
     {
@@ -139,7 +139,7 @@ class Client
      * @param array $result
      *
      * @return array
-     * @throws \Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\Exception
+     * @throws \Translator\MicrosoftTranslator\Exception
      */
     private function getResponse(array $result): array
     {
@@ -186,7 +186,7 @@ class Client
      * @param null $special_url new url instead of api url
      *
      * @return array
-     * @throws \Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\Exception
+     * @throws \Translator\MicrosoftTranslator\Exception
      */
     private function get($endpoint, $url_parameters = [], $query_parameters = [], $special_url = null): array
     {

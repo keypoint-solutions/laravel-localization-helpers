@@ -1,4 +1,6 @@
-<?php namespace Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator;
+<?php
+
+namespace Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator;
 
 use Illuminate\Support\Arr;
 

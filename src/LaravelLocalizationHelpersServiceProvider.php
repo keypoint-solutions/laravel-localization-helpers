@@ -20,11 +20,9 @@ class LaravelLocalizationHelpersServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (function_exists("config_path")) {
-            $this->publishes([
-                __DIR__ . '/../../config/config.php' => config_path('laravel-localization-helpers.php'),
-            ]);
-        }
+        $this->publishes([
+            __DIR__ . '/../../config/config.php' => config_path('laravel-localization-helpers.php'),
+        ]);
     }
 
     /**
@@ -37,15 +35,15 @@ class LaravelLocalizationHelpersServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('localization.command.missing', function ($app) {
-            return new Command\LocalizationMissing($app['config']);
+            return new \Command\LocalizationMissing($app['config']);
         });
 
         $this->app->singleton('localization.command.find', function ($app) {
-            return new Command\LocalizationFind($app['config']);
+            return new \Command\LocalizationFind($app['config']);
         });
 
         $this->app->singleton('localization.command.clear', function ($app) {
-            return new Command\LocalizationClear($app['config']);
+            return new \Command\LocalizationClear($app['config']);
         });
 
         $this->commands(
@@ -55,16 +53,12 @@ class LaravelLocalizationHelpersServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton('localization.helpers', function ($app) {
-            return new Factory\Localization(new Factory\MessageBag());
+            return new \Factory\Localization(new \Factory\MessageBag());
         });
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/config.php', 'laravel-localization-helpers'
+            __DIR__ . '/../../config/config.php',
+            'laravel-localization-helpers'
         );
     }
-
 }
-
-
-
-

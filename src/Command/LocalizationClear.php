@@ -2,7 +2,6 @@
 
 namespace Keypoint\LaravelLocalizationHelpers\Command;
 
-use Config;
 use Illuminate\Config\Repository;
 use Keypoint\LaravelLocalizationHelpers\Factory\Localization;
 use Symfony\Component\Console\Input\InputOption;

@@ -1,4 +1,6 @@
-<?php namespace Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator;
+<?php
+
+namespace Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator;
 
 class Exception extends \Exception
 {
@@ -17,13 +19,13 @@ class Exception extends \Exception
             if (isset($message['http_code'])) {
                 $code = $message['http_code'];
                 $message = json_encode(@$message['http_body']);
-            } else if (isset($message['error_num'])) {
+            } elseif (isset($message['error_num'])) {
                 $code = $message['error_num'];
                 $message = @$message['error_msg'];
             } else {
                 $message = json_encode($message);
             }
-        } else if (!is_string($message)) {
+        } elseif (!is_string($message)) {
             $message = strval($message);
         }
 
@@ -51,5 +53,4 @@ class Exception extends \Exception
     {
         return @$this->accumulator_message['http_body']['error_description'];
     }
-
 }

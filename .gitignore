@@ -1,6 +1,5 @@
 /vendor
 composer.phar
-composer.lock
 .DS_Store
 .idea
 coverage
@@ -8,3 +7,4 @@ coverage
 _ide_helper.php
 cs_fixer_tmp_*
 .php_cs.cache
+/.php-cs-fixer.cache

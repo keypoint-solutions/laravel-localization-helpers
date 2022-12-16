@@ -12,26 +12,21 @@ class CodeStyle
      * Fix Code Style for a file or a directory
      *
      * @param       $filePath
-     * @param array $fixers
-     * @param null $level
-     *
-     * @return string
-     * @throws \Exception
-     * @throws \Keypoint\LaravelLocalizationHelpers\Factory\Exception
+     * @param array $rules
+     * @return string|null
+     * @throws Exception
      */
-    public function fix($filePath, array $rules)
+    public function fix($filePath, array $rules): ?string
     {
         if (empty($rules)) {
             return null;
         }
 
-        if (defined('HHVM_VERSION_ID')) // @codeCoverageIgnoreStart
-        {
+        if (defined('HHVM_VERSION_ID')) { // @codeCoverageIgnoreStart
             throw new Exception("HHVM not supported");
         } // @codeCoverageIgnoreEnd
 
-        else if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50600) // @codeCoverageIgnoreStart
-        {
+        elseif (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50600) { // @codeCoverageIgnoreStart
             throw new Exception("PHP needs to be a minimum version of PHP 5.6.0");
         }
         // @codeCoverageIgnoreEnd

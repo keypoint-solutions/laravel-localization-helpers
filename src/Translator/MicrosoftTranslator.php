@@ -5,7 +5,7 @@ class KPSMicrosoftTranslatorAutoLoader
     /**
      * @param string $class the class name
      */
-    static function autoload($class)
+    public static function autoload(string $class): void
     {
         $elements = explode('\\', $class);
 
@@ -16,4 +16,4 @@ class KPSMicrosoftTranslatorAutoLoader
     }
 }
 
-spl_autoload_register(['KPSMicrosoftTranslatorAutoLoader', 'autoload'], true, true);
+spl_autoload_register(['Translator\KPSMicrosoftTranslatorAutoLoader', 'autoload'], true, true);

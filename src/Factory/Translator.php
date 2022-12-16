@@ -9,11 +9,11 @@ class Translator implements TranslatorInterface
      * @param string $translator The translation service name
      * @param array $config The configuration array for the translation service
      *
-     * @throws \Keypoint\LaravelLocalizationHelpers\Factory\Exception
+     * @throws \Factory\Exception
      */
     public function __construct($translator, $config = [])
     {
-        $class = 'Keypoint\LaravelLocalizationHelpers\Factory\Translator' . $translator;
+        $class = 'Factory\Translator' . $translator;
         $translator = new $class($config);
 
         if (!$translator instanceof TranslatorInterface) {
@@ -34,7 +34,7 @@ class Translator implements TranslatorInterface
     /**
      * Return the used translator
      *
-     * @return \Keypoint\LaravelLocalizationHelpers\Factory\TranslatorInterface
+     * @return \Factory\TranslatorInterface
      */
     public function getTranslator()
     {

@@ -36,14 +36,14 @@ LLH is a set of artisan commands to manage translations in your Laravel project.
 - Update your installation : `composer update`
 - For Laravel, add the following line in the `providers` array of the `config/app.php` configuration file :
     ```php
-    Keypoint\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProvider::class,
+    \LaravelLocalizationHelpersServiceProvider::class,
     ```
 
 - For Lumen, add the following lines in the `bootstrap/app.php` file :
-	```php
-	$app->register( Keypoint\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProvider::class );
-	$app->configure('laravel-localization-helpers');
-	```
+  ```php
+  $app->register( \LaravelLocalizationHelpersServiceProvider::class );
+  $app->configure('laravel-localization-helpers');
+  ```
 
 - Now execute `php artisan list` and you should view the new *localization* commands:
     ```
@@ -58,7 +58,7 @@ LLH is a set of artisan commands to manage translations in your Laravel project.
 In Laravel, you can add the facade in the Aliases if you need to manage translations in your code :
 
 ```php
-'LocalizationHelpers' => Keypoint\LaravelLocalizationHelpers\Facade\LocalizationHelpers::class
+'LocalizationHelpers' => Facade\LocalizationHelpers::class
 ```
 
 ## 2. Configuration

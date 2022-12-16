@@ -2,7 +2,6 @@
 
 namespace Keypoint\LaravelLocalizationHelpers\Command;
 
-use Config;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
@@ -140,9 +139,10 @@ class LocalizationMissing extends LocalizationAbstract
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return int
+     * @throws \Exception
      */
-    public function handle()
+    public function handle(): int
     {
         $folders = $this->manager->getPath($this->folders);
         $this->display = !$this->option('silent');
@@ -222,7 +222,7 @@ class LocalizationMissing extends LocalizationAbstract
                         $this->writeError("- " . $path);
                     }
                     break;
-                //@codeCoverageIgnoreEnd
+                    //@codeCoverageIgnoreEnd
 
                 case Localization::NO_LANG_FOLDER_FOUND_IN_YOUR_CUSTOM_PATH:
                     $this->writeError('No lang folder found in your custom path: "' . $e->getParameter() . '"');
@@ -278,7 +278,6 @@ class LocalizationMissing extends LocalizationAbstract
                 $this->writeLine('    ' . $lang_file->getShortFilePath());
 
                 if (!$this->option('dry-run')) {
-
                     if (!$lang_file->ensureFolder()) {
                         // @codeCoverageIgnoreStart
                         $this->writeError("    > Unable to create directory " . $lang_file->getFileFolderPath());
@@ -498,7 +497,7 @@ class LocalizationMissing extends LocalizationAbstract
 
                 if (($something_to_do === true) || ($this->option('force'))) {
                     if ($needsJSONOutput) {
-                        $final_lemmas = Arr::except($final_lemmas, array_filter(array_keys($final_lemmas), fn($l) => str_starts_with($l, 'LLH___')));
+                        $final_lemmas = Arr::except($final_lemmas, array_filter(array_keys($final_lemmas), fn ($l) => str_starts_with($l, 'LLH___')));
                     }
 
                     $content = $needsJSONOutput ? json_encode($final_lemmas, JSON_PRETTY_PRINT) : var_export($final_lemmas, true);
@@ -557,7 +556,6 @@ class LocalizationMissing extends LocalizationAbstract
         // Normal mode                           //
         ///////////////////////////////////////////
         if (count($job) > 0) {
-
             if ($this->option('no-interaction')) {
                 $do = true;
             } // @codeCoverageIgnoreStart
@@ -569,7 +567,6 @@ class LocalizationMissing extends LocalizationAbstract
             // @codeCoverageIgnoreEnd
 
             if ($do === true) {
-
                 if (!$this->option('no-backup')) {
                     $this->writeLine('Backup files:');
 
@@ -612,7 +609,6 @@ class LocalizationMissing extends LocalizationAbstract
                         $open_files .= ' ' . escapeshellarg($file_lang_path);
                     }
                     // @codeCoverageIgnoreEnd
-
                 }
 
                 $this->writeLine('');
@@ -622,9 +618,9 @@ class LocalizationMissing extends LocalizationAbstract
                 if ($this->option('editor')) {
                     exec($this->editor . $open_files);
                 }
-                // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreEnd
 
-                // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreStart
             } else {
                 $this->writeLine('');
                 $this->writeComment('Process aborted. No file has been changed.');
@@ -644,7 +640,7 @@ class LocalizationMissing extends LocalizationAbstract
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getArguments(): array
     {
         return [];
     }
@@ -654,7 +650,7 @@ class LocalizationMissing extends LocalizationAbstract
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['dry-run', 'r', InputOption::VALUE_NONE, 'Dry run: run process but do not write anything'],
