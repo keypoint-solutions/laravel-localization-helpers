@@ -55,7 +55,7 @@ class Client
     {
         // make :parameter not translatable
         $queryParameters = [
-            'text' => preg_replace('/(:[a-zA-Z0-9_.-]+)/', '<span class="notranslate">$1</span>', $text),
+            'text' => is_array($text) ? $text : preg_replace('/(:[a-zA-Z0-9_.-]+)/', '<span class="notranslate">$1</span>', $text),
             'from' => $from ?: self::getDefaultLanguage(),
             'to' => $to,
             'textType' => 'html',
