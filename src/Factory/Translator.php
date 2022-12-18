@@ -2,18 +2,17 @@
 
 class Translator implements TranslatorInterface
 {
-    /** @var TranslatorInterface */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
     /**
-     * @param string $translator The translation service name
-     * @param array $config The configuration array for the translation service
+     * @param  string  $translator  The translation service name
+     * @param  array  $config  The configuration array for the translation service
      *
-     * @throws \Factory\Exception
+     * @throws Exception
      */
-    public function __construct($translator, $config = [])
+    public function __construct(string $translator, array $config = [])
     {
-        $class = 'Factory\Translator' . $translator;
+        $class = 'Keypoint\LaravelLocalizationHelpers\Factory\Translator'.$translator;
         $translator = new $class($config);
 
         if (!$translator instanceof TranslatorInterface) {
@@ -26,17 +25,21 @@ class Translator implements TranslatorInterface
         $this->translator = $translator;
     }
 
-    public function translate(string|array $translatable, string $toLang, ?string $fromLang = null): string|array|null
-    {
-        return $this->translator->translate($translatable, $toLang, $fromLang);
+    public function translate(
+        string|array $translatable,
+        string $toLang,
+        string|null $fromLang = null,
+        array|null $options = []
+    ): string|array|null {
+        return $this->translator->translate($translatable, $toLang, $fromLang, $options);
     }
 
     /**
      * Return the used translator
      *
-     * @return \Factory\TranslatorInterface
+     * @return TranslatorInterface
      */
-    public function getTranslator()
+    public function getTranslator(): TranslatorInterface
     {
         return $this->translator;
     }

@@ -7,8 +7,8 @@ interface HttpInterface
     /**
      * GET API endpoint
      *
-     * @param string $url
-     * @param ?array $parameters
+     * @param  string  $url
+     * @param ?array  $parameters
      *
      * @return array
      */
@@ -17,8 +17,8 @@ interface HttpInterface
     /**
      * POST API endpoint
      *
-     * @param string $url
-     * @param ?array $parameters
+     * @param  string  $url
+     * @param ?array  $parameters
      *
      * @return array
      */
@@ -27,8 +27,8 @@ interface HttpInterface
     /**
      * PUT API endpoint
      *
-     * @param string $url
-     * @param ?array $parameters
+     * @param  string  $url
+     * @param ?array  $parameters
      *
      * @return array
      */
@@ -37,8 +37,8 @@ interface HttpInterface
     /**
      * DELETE API endpoint
      *
-     * @param string $url
-     * @param ?array $parameters
+     * @param  string  $url
+     * @param ?array  $parameters
      *
      * @return array
      */

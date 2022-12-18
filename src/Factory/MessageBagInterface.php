@@ -1,11 +1,13 @@
-<?php namespace Keypoint\LaravelLocalizationHelpers\Factory;
+<?php
+
+namespace Keypoint\LaravelLocalizationHelpers\Factory;
 
 interface MessageBagInterface
 {
     /**
      * Add a simple message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -14,7 +16,7 @@ interface MessageBagInterface
     /**
      * Add an info message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -23,7 +25,7 @@ interface MessageBagInterface
     /**
      * Add a comment message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -32,7 +34,7 @@ interface MessageBagInterface
     /**
      * Add a question message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -41,7 +43,7 @@ interface MessageBagInterface
     /**
      * Add an error message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */

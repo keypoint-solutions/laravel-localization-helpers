@@ -33,11 +33,11 @@ class LocalizationClear extends LocalizationAbstract
     /**
      * Create a new command instance.
      *
-     * @param \Illuminate\Config\Repository $configRepository
+     * @param  \Illuminate\Config\Repository  $configRepository
      */
     public function __construct(Repository $configRepository)
     {
-        $this->lang_folder_path = config(Localization::PREFIX_LARAVEL_CONFIG . 'lang_folder_path');
+        $this->lang_folder_path = config(Localization::PREFIX_LARAVEL_CONFIG.'lang_folder_path');
 
         parent::__construct($configRepository);
     }
@@ -49,7 +49,7 @@ class LocalizationClear extends LocalizationAbstract
      */
     public function handle()
     {
-        $days = (int)$this->option('days');
+        $days = (int) $this->option('days');
 
         if ($days < 0) {
             $this->writeError("days option cannot be negative");

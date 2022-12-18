@@ -1,4 +1,6 @@
-<?php namespace Keypoint\LaravelLocalizationHelpers\Facade;
+<?php
+
+namespace Keypoint\LaravelLocalizationHelpers\Facade;
 
 use Illuminate\Support\Facades\Facade;
 

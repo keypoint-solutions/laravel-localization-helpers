@@ -7,7 +7,7 @@ class LangFileTypeGenuine extends LangFileTypeAbstract
     /**
      * LangFileTypeGenuine constructor.
      *
-     * @param string $lang
+     * @param  string  $lang
      */
     public function __construct($lang)
     {

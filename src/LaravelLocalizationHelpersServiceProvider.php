@@ -1,6 +1,11 @@
 <?php namespace Keypoint\LaravelLocalizationHelpers;
 
 use Illuminate\Support\ServiceProvider;
+use Keypoint\LaravelLocalizationHelpers\Command\LocalizationClear;
+use Keypoint\LaravelLocalizationHelpers\Command\LocalizationFind;
+use Keypoint\LaravelLocalizationHelpers\Command\LocalizationMissing;
+use Keypoint\LaravelLocalizationHelpers\Factory\Localization;
+use Keypoint\LaravelLocalizationHelpers\Factory\MessageBag;
 
 class LaravelLocalizationHelpersServiceProvider extends ServiceProvider
 {
@@ -21,7 +26,7 @@ class LaravelLocalizationHelpersServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../../config/config.php' => config_path('laravel-localization-helpers.php'),
+            __DIR__.'/../config/config.php' => config_path('laravel-localization-helpers.php'),
         ]);
     }
 
@@ -35,15 +40,15 @@ class LaravelLocalizationHelpersServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('localization.command.missing', function ($app) {
-            return new \Command\LocalizationMissing($app['config']);
+            return new LocalizationMissing($app['config']);
         });
 
         $this->app->singleton('localization.command.find', function ($app) {
-            return new \Command\LocalizationFind($app['config']);
+            return new LocalizationFind($app['config']);
         });
 
         $this->app->singleton('localization.command.clear', function ($app) {
-            return new \Command\LocalizationClear($app['config']);
+            return new LocalizationClear($app['config']);
         });
 
         $this->commands(
@@ -53,11 +58,11 @@ class LaravelLocalizationHelpersServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton('localization.helpers', function ($app) {
-            return new \Factory\Localization(new \Factory\MessageBag());
+            return new Localization(new MessageBag());
         });
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/config.php',
+            __DIR__.'/../config/config.php',
             'laravel-localization-helpers'
         );
     }

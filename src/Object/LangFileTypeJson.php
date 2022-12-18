@@ -7,7 +7,7 @@ class LangFileTypeJson extends LangFileTypeAbstract
     /**
      * LangFileTypeJson constructor.
      *
-     * @param string $lang
+     * @param  string  $lang
      */
     public function __construct($lang)
     {

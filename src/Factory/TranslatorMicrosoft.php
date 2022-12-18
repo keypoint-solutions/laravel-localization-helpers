@@ -1,17 +1,18 @@
 <?php namespace Keypoint\LaravelLocalizationHelpers\Factory;
 
 use Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\Client;
+use Keypoint\LaravelLocalizationHelpers\Translator\MicrosoftTranslator\Exception;
 
 class TranslatorMicrosoft implements TranslatorInterface
 {
-    protected $msTranslator;
+    protected Client $msTranslator;
 
     /**
-     * @param array $config
+     * @param  array  $config
      *
-     * @throws \Keypoint\LaravelLocalizationHelpers\Factory\Exception
+     * @throws Exception
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
         if ((isset($config['client_key'])) && (!is_null($config['client_key']))) {
             $client_key = $config['client_key'];
@@ -29,24 +30,19 @@ class TranslatorMicrosoft implements TranslatorInterface
     }
 
     /**
-     * @param string|array $translatable Sentence or word to translate
-     * @param string $toLang Target language
-     * @param null $fromLang Source language (if set to null, translator will try to guess)
-     *
+     * @param  string|array  $translatable  Sentence or word to translate
+     * @param  string  $toLang  Target language
+     * @param  string|null  $fromLang  Source language (if set to null, translator will try to guess)
+     * @param  array|null  $options
      * @return string|array|null The translated sentence or null if an error occurs
-     * @throws \Translator\MicrosoftTranslator\Exception
      */
-    public function translate(string|array $translatable, string $toLang, ?string $fromLang = null): string|array|null
-    {
-        try {
-            return $this->msTranslator->translate($translatable, $toLang, $fromLang);
-        } catch (\Translator\MicrosoftTranslator\Exception $e) {
-            if (!(strpos($e->getMessage(), 'Unable to generate a new access token') === false)) {
-                throw $e;
-            }
-        }
-
-        return null;
+    public function translate(
+        string|array $translatable,
+        string $toLang,
+        string|null $fromLang = null,
+        array|null $options = []
+    ): string|array|null {
+        return $this->msTranslator->translate($translatable, $toLang, $fromLang, $options['category'] ?? 'general', $options);
     }
 }
 

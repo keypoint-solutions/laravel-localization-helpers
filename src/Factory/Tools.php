@@ -12,7 +12,7 @@ class Tools
     {
         $versions = explode('.', self::getLaravelVersion(), 1);
 
-        return @(int)$versions[0];
+        return @(int) $versions[0];
     }
 
     /**
@@ -26,7 +26,7 @@ class Tools
     }
 
     /**
-     * @param string $glob a file glob
+     * @param  string  $glob  a file glob
      *
      * @return array the list of deleted files
      */
@@ -49,15 +49,15 @@ class Tools
     /**
      * Check if the "$dir_lang/$lang" is a valid directory
      *
-     * @param string $dir_lang
-     * @param string $lang
+     * @param  string  $dir_lang
+     * @param  string  $lang
      *
      * @return bool
      */
     public static function isValidDirectory($dir_lang, $lang)
     {
         if (!in_array($lang, [".", ".."])) {
-            if (is_dir($dir_lang . DIRECTORY_SEPARATOR . $lang)) {
+            if (is_dir($dir_lang.DIRECTORY_SEPARATOR.$lang)) {
                 return true;
             }
         }
@@ -73,11 +73,11 @@ class Tools
      *
      * The escape char before a dot is used to escape all dots next to the escaped dot
      *
-     * @param array $array
-     * @param string $key
-     * @param mixed $value
-     * @param string $regex
-     * @param int $level
+     * @param  array  $array
+     * @param  string  $key
+     * @param  mixed  $value
+     * @param  string  $regex
+     * @param  int  $level
      *
      * @return array
      */
@@ -111,13 +111,13 @@ class Tools
     /**
      * Return char 's' if argument is greater than 1
      *
-     * @param float|int|string $number
+     * @param  float|int|string  $number
      *
      * @return string
      */
     public static function getPlural($number)
     {
-        return ((float)$number >= 2) ? 's' : '';
+        return ((float) $number >= 2) ? 's' : '';
     }
 
 

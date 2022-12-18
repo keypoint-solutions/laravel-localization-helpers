@@ -7,9 +7,9 @@ class Exception extends \Exception
     /**
      * MicrosoftTranslator Exception can handle message arrays
      *
-     * @param mixed $message
-     * @param int $code
-     * @param \Exception|null $previous
+     * @param  mixed  $message
+     * @param  int  $code
+     * @param  \Exception|null  $previous
      */
     public function __construct($message, $code = 0, \Exception $previous = null)
     {

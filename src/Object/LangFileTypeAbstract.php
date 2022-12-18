@@ -13,7 +13,7 @@ abstract class LangFileTypeAbstract
     /**
      * LangFileTypeAbstract constructor.
      *
-     * @param string $lang
+     * @param  string  $lang
      */
     public function __construct($lang)
     {
@@ -29,7 +29,7 @@ abstract class LangFileTypeAbstract
     }
 
     /**
-     * @param boolean $typeVendor
+     * @param  boolean  $typeVendor
      *
      * @return LangFileAbstract
      */
@@ -49,7 +49,7 @@ abstract class LangFileTypeAbstract
     }
 
     /**
-     * @param boolean $typeJson
+     * @param  boolean  $typeJson
      *
      * @return LangFileAbstract
      */
@@ -69,7 +69,7 @@ abstract class LangFileTypeAbstract
     }
 
     /**
-     * @param mixed $lang
+     * @param  mixed  $lang
      *
      * @return LangFileAbstract
      */

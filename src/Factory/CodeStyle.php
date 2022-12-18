@@ -12,7 +12,7 @@ class CodeStyle
      * Fix Code Style for a file or a directory
      *
      * @param       $filePath
-     * @param array $rules
+     * @param  array  $rules
      * @return string|null
      * @throws Exception
      */
@@ -32,7 +32,7 @@ class CodeStyle
         // @codeCoverageIgnoreEnd
 
         if (!file_exists($filePath)) {
-            throw new Exception('File "' . $filePath . '" does not exist, cannot fix it');
+            throw new Exception('File "'.$filePath.'" does not exist, cannot fix it');
         }
 
         $options = [

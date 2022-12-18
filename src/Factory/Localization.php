@@ -29,7 +29,7 @@ class Localization
     protected $codeStyler;
 
     /**
-     * @param \Factory\MessageBagInterface $messageBag A message bag or a Console
+     * @param  \Factory\MessageBagInterface  $messageBag  A message bag or a Console
      *                                                                                   object for output reports
      */
     public function __construct(MessageBagInterface $messageBag)
@@ -51,7 +51,7 @@ class Localization
     /**
      * Return an absolute path without predefined variables
      *
-     * @param string|array $path the relative path
+     * @param  string|array  $path  the relative path
      *
      * @return array the absolute path
      */
@@ -93,9 +93,9 @@ class Localization
     /**
      * Extract all translations from the provided folders
      *
-     * @param array $folders a list of folder to search in
-     * @param array $trans_methods an array of regex to catch
-     * @param string $php_file_extension default is php
+     * @param  array  $folders  a list of folder to search in
+     * @param  array  $trans_methods  an array of regex to catch
+     * @param  string  $php_file_extension  default is php
      *
      * @return array
      */
@@ -127,16 +127,18 @@ class Localization
     /**
      * Return an iterator of files with specific extension in the provided paths and subpaths
      *
-     * @param string $path a source path
-     * @param string $ext
+     * @param  string  $path  a source path
+     * @param  string  $ext
      *
      * @return array|RegexIterator
      */
     public function getFilesWithExtension($path, $ext = 'php')
     {
         if (is_dir($path)) {
-            return new RegexIterator(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
-            ), '/^.+\.' . $ext . '$/i', RecursiveRegexIterator::GET_MATCH);
+            return new RegexIterator(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path,
+                RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST,
+                RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
+            ), '/^.+\.'.$ext.'$/i', RecursiveRegexIterator::GET_MATCH);
         } else {
             return [];
         }
@@ -149,8 +151,8 @@ class Localization
      * - $  -> auto-generated translation cannot be supported
      * - :: -> package translations are not taken in account
      *
-     * @param string $path the file path
-     * @param array $trans_methods an array of regex to catch
+     * @param  string  $path  the file path
+     * @param  array  $trans_methods  an array of regex to catch
      *
      * @return array an array dot of found translations
      */
@@ -200,7 +202,7 @@ class Localization
     }
 
     /**
-     * @param array $lemmas an array of lemma
+     * @param  array  $lemmas  an array of lemma
      *                       eg: [ 'message.lemma.child' => string(83)
      *                       "/Users/potsky/WTF/laravel-localization-helpers/tests/mock/trans.php" , ... ]
      *
@@ -218,12 +220,12 @@ class Localization
     }
 
     /**
-     * @param array $lemmas an array of lemma
+     * @param  array  $lemmas  an array of lemma
      *                       eg: [ 'message.lemma.child' => string(83)
      *                       "/Users/potsky/WTF/laravel-localization-helpers/tests/mock/trans.php" , ... ]
      *
-     * @param string $dot_notation_split_regex
-     * @param int $level
+     * @param  string  $dot_notation_split_regex
+     * @param  int  $level
      *
      * @return array a structured array of lemma
      *               eg: array(1) {
@@ -248,7 +250,8 @@ class Localization
             $keys = preg_split($dot_notation_split_regex, $key, $level);
 
             if (count($keys) <= 1) {
-                Tools::arraySet($lemmas_structured, self::JSON_HEADER . '.' . $key, $value, $dot_notation_split_regex, $level);
+                Tools::arraySet($lemmas_structured, self::JSON_HEADER.'.'.$key, $value, $dot_notation_split_regex,
+                    $level);
             } else {
                 Tools::arraySet($lemmas_structured, $key, $value, $dot_notation_split_regex, $level);
             }
@@ -258,14 +261,14 @@ class Localization
     }
 
     /**
-     * @param int $offsetDay the count of days to subtract to the current time
+     * @param  int  $offsetDay  the count of days to subtract to the current time
      *
      * @return bool|string current date
      */
     public function getBackupDate($offsetDay = 0)
     {
         $now = new \DateTime();
-        $now->sub(new \DateInterval('P' . (int)$offsetDay . 'D'));
+        $now->sub(new \DateInterval('P'.(int) $offsetDay.'D'));
 
         return $now->format(self::BACKUP_DATE_FORMAT);
     }
@@ -273,10 +276,10 @@ class Localization
     /**
      * Delete backup files
      *
-     * @param string $lang_folder_path
-     * @param int $days
-     * @param bool|false $dryRun
-     * @param string $ext
+     * @param  string  $lang_folder_path
+     * @param  int  $days
+     * @param  bool|false  $dryRun
+     * @param  string  $ext
      *
      * @return bool
      */
@@ -294,13 +297,13 @@ class Localization
                 case self::NO_LANG_FOLDER_FOUND_IN_THESE_PATHS:
                     $this->messageBag->writeError("No lang folder found in these paths:");
                     foreach ($e->getParameter() as $path) {
-                        $this->messageBag->writeError("- " . $path);
+                        $this->messageBag->writeError("- ".$path);
                     }
                     break;
                 //@codeCoverageIgnoreEnd
 
                 case self::NO_LANG_FOLDER_FOUND_IN_YOUR_CUSTOM_PATH:
-                    $this->messageBag->writeError('No lang folder found in your custom path: "' . $e->getParameter() . '"');
+                    $this->messageBag->writeError('No lang folder found in your custom path: "'.$e->getParameter().'"');
                     break;
             }
 
@@ -315,7 +318,7 @@ class Localization
             // @codeCoverageIgnoreStart
             // Cannot happen because of glob but safer
             if (is_null($fileDate)) {
-                $this->messageBag->writeError('Unable to detect date in file ' . $file);
+                $this->messageBag->writeError('Unable to detect date in file '.$file);
                 $return = false;
 
                 continue;
@@ -330,16 +333,16 @@ class Localization
                 }
 
                 if ($deleted === true) {
-                    $this->messageBag->writeInfo('Deleting file ' . $file);
+                    $this->messageBag->writeInfo('Deleting file '.$file);
                 } // @codeCoverageIgnoreStart
                 else {
-                    $this->messageBag->writeError('Unable to delete file ' . $file);
+                    $this->messageBag->writeError('Unable to delete file '.$file);
 
                     $return = false;
                 }
             } // @codeCoverageIgnoreEnd
             else {
-                $this->messageBag->writeInfo('Skip file ' . $file . ' (not older than ' . $days . 'day' . Tools::getPlural($days) . ')');
+                $this->messageBag->writeInfo('Skip file '.$file.' (not older than '.$days.'day'.Tools::getPlural($days).')');
             }
         }
 
@@ -358,11 +361,11 @@ class Localization
     {
         if (empty($lang_folder_path)) {
             $paths = [
-                base_path() . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'lang',
+                base_path().DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'lang',
             ];
 
             if (function_exists('base_path')) {
-                $paths[] = base_path() . DIRECTORY_SEPARATOR . 'lang';
+                $paths[] = base_path().DIRECTORY_SEPARATOR.'lang';
             }
 
             foreach ($paths as $path) {
@@ -390,14 +393,14 @@ class Localization
     /**
      * Return all lang backup files
      *
-     * @param string $lang_directory the lang directory
-     * @param string $ext
+     * @param  string  $lang_directory  the lang directory
+     * @param  string  $ext
      *
      * @return array
      */
     public function getBackupFiles($lang_directory, $ext = 'php')
     {
-        $files = $lang_directory . '/*/*[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].' . $ext;
+        $files = $lang_directory.'/*/*[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9].'.$ext;
 
         return glob($files);
     }
@@ -405,8 +408,8 @@ class Localization
     /**
      * Return the date of a backup file
      *
-     * @param string $file a backup file path
-     * @param string $ext
+     * @param  string  $file  a backup file path
+     * @param  string  $ext
      *
      * @return \DateTime|null
      */
@@ -414,7 +417,7 @@ class Localization
     {
         $matches = [];
 
-        if (preg_match('@^(.*)([0-9]{8}_[0-9]{6})\\.' . $ext . '$@', $file, $matches) === 1) {
+        if (preg_match('@^(.*)([0-9]{8}_[0-9]{6})\\.'.$ext.'$@', $file, $matches) === 1) {
             return \DateTime::createFromFormat(self::BACKUP_DATE_FORMAT, $matches[2]);
         }
         // @codeCoverageIgnoreStart
@@ -426,8 +429,8 @@ class Localization
     }
 
     /**
-     * @param \DateTime $date
-     * @param int $days
+     * @param  \DateTime  $date
+     * @param  int  $days
      *
      * @return bool
      */
@@ -442,12 +445,12 @@ class Localization
     /**
      * Get the list of PHP code files where a lemma is defined
      *
-     * @param string $lemma A lemma to search for or a regex to search for
-     * @param array $folders An array of folder to search for lemma in
-     * @param array $trans_methods An array of PHP lang functions
-     * @param bool|false $regex Is lemma a regex ?
-     * @param bool|false $shortOutput Output style for file paths
-     * @param string $ext
+     * @param  string  $lemma  A lemma to search for or a regex to search for
+     * @param  array  $folders  An array of folder to search for lemma in
+     * @param  array  $trans_methods  An array of PHP lang functions
+     * @param  bool|false  $regex  Is lemma a regex ?
+     * @param  bool|false  $shortOutput  Output style for file paths
+     * @param  string  $ext
      *
      * @return array|false
      */
@@ -468,7 +471,8 @@ class Localization
                                 $r = preg_match($lemma, $real_value);
                             } // Exception is thrown via command
                             catch (\Exception $e) {
-                                $this->messageBag->writeError("The argument is not a valid regular expression:" . str_replace('preg_match():', '', $e->getMessage()));
+                                $this->messageBag->writeError("The argument is not a valid regular expression:".str_replace('preg_match():',
+                                        '', $e->getMessage()));
 
                                 return false;
                             }
@@ -511,7 +515,7 @@ class Localization
     /**
      * Return an relative path to the laravel directory
      *
-     * @param string $path the absolute path
+     * @param  string  $path  the absolute path
      *
      * @return string the relative path
      */
@@ -521,24 +525,29 @@ class Localization
     }
 
     /**
-     * @param string|array $translatable
-     * @param string $toLang
-     * @param ?string $fromLang
-     *
+     * @param  string|array  $translatable
+     * @param  string  $toLang
+     * @param ?string  $fromLang
+     * @param  array|null  $options
      * @return string|array|null
+     * @throws Exception
      */
-    public function translate(string|array $translatable, string $toLang, ?string $fromLang = null): string|array|null
-    {
+    public function translate(
+        string|array $translatable,
+        string $toLang,
+        string|null $fromLang = null,
+        array|null $options = []
+    ): string|array|null {
         if (is_null($this->translator)) {
             /** @var string $translator */
-            $translator = config(self::PREFIX_LARAVEL_CONFIG . 'translator');
+            $translator = config(self::PREFIX_LARAVEL_CONFIG.'translator');
             $this->translator = new Translator('Microsoft', [
-                'client_key' => config(self::PREFIX_LARAVEL_CONFIG . 'translators.' . $translator . '.client_key'),
-                'default_language' => config(self::PREFIX_LARAVEL_CONFIG . 'translators.' . $translator . '.default_language'),
+                'client_key' => config(self::PREFIX_LARAVEL_CONFIG.'translators.'.$translator.'.client_key'),
+                'default_language' => config(self::PREFIX_LARAVEL_CONFIG.'translators.'.$translator.'.default_language'),
             ]);
         }
 
-        $translation = $this->translator->translate($translatable, $toLang, $fromLang);
+        $translation = $this->translator->translate($translatable, $toLang, $fromLang, $options);
 
         // fallback
         if (is_null($translation)) {
@@ -551,14 +560,13 @@ class Localization
     /**
      * Fix Code Style for a file or a directory
      *
-     * @param       $filePath
-     * @param mixed $rules
+     * @param  string  $filePath
+     * @param  mixed  $rules
      *
-     * @return string
-     * @throws \Exception
-     * @throws \Keypoint\LaravelLocalizationHelpers\Factory\Exception
+     * @return string|null
+     * @throws Exception
      */
-    public function fixCodeStyle($filePath, $rules)
+    public function fixCodeStyle(string $filePath, mixed $rules): string|null
     {
         if (!is_array($rules)) {
             return null;
@@ -570,15 +578,15 @@ class Localization
     /**
      * Get the backup file path according to the current file path
      *
-     * @param string $file_lang_path
-     * @param string $date
-     * @param string $ext
+     * @param  string  $file_lang_path
+     * @param  string  $date
+     * @param  string  $ext
      *
      * @return mixed
      */
-    public function getBackupPath($file_lang_path, $date, $ext = 'php')
+    public function getBackupPath(string $file_lang_path, string $date, string $ext = 'php')
     {
-        return preg_replace('/\.' . $ext . '$/', '.' . $date . '.' . $ext, $file_lang_path);
+        return preg_replace('/\.'.$ext.'$/', '.'.$date.'.'.$ext, $file_lang_path);
     }
 }
 

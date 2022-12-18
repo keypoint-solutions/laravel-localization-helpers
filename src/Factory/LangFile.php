@@ -22,8 +22,8 @@ class LangFile
 
 
     /**
-     * @param string $dir_lang
-     * @param array $json_langs
+     * @param  string  $dir_lang
+     * @param  array  $json_langs
      *
      * @return array
      */

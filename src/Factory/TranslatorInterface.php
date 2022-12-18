@@ -2,5 +2,10 @@
 
 interface TranslatorInterface
 {
-    public function translate(string|array $translatable, string $toLang, ?string $fromLang = null): string|array|null;
+    public function translate(
+        string|array $translatable,
+        string $toLang,
+        string|null $fromLang = null,
+        array|null $options = []
+    ): string|array|null;
 }

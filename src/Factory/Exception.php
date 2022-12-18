@@ -1,13 +1,15 @@
-<?php namespace Keypoint\LaravelLocalizationHelpers\Factory;
+<?php
+
+namespace Keypoint\LaravelLocalizationHelpers\Factory;
 
 class Exception extends \Exception
 {
     protected $parameter;
 
     /**
-     * @param string $message
-     * @param int $code
-     * @param \Exception|null $previous
+     * @param  string  $message
+     * @param  int  $code
+     * @param  \Exception|null  $previous
      */
     public function __construct($message = "", $code = 0, \Exception $previous = null)
     {

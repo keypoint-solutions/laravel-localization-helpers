@@ -44,7 +44,7 @@ abstract class LocalizationAbstract extends Command implements MessageBagInterfa
     /**
      * Create a new command instance.
      *
-     * @param \Illuminate\Config\Repository $configRepository
+     * @param  \Illuminate\Config\Repository  $configRepository
      */
     public function __construct(Repository $configRepository)
     {
@@ -57,7 +57,7 @@ abstract class LocalizationAbstract extends Command implements MessageBagInterfa
     /**
      * Display console message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -71,7 +71,7 @@ abstract class LocalizationAbstract extends Command implements MessageBagInterfa
     /**
      * Display console message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -85,7 +85,7 @@ abstract class LocalizationAbstract extends Command implements MessageBagInterfa
     /**
      * Display console message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -99,7 +99,7 @@ abstract class LocalizationAbstract extends Command implements MessageBagInterfa
     /**
      * Display console message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      *
@@ -115,7 +115,7 @@ abstract class LocalizationAbstract extends Command implements MessageBagInterfa
     /**
      * Display console message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -129,8 +129,8 @@ abstract class LocalizationAbstract extends Command implements MessageBagInterfa
     /**
      * Log in a file for debug purpose only
      *
-     * @param mixed $txt
-     * @param string $logFile
+     * @param  mixed  $txt
+     * @param  string  $logFile
      *
      * @codeCoverageIgnore
      */
@@ -140,7 +140,7 @@ abstract class LocalizationAbstract extends Command implements MessageBagInterfa
             $txt = print_r($txt, true);
         }
 
-        $txt = '==> ' . date('Y/m/d H:i:s') . ' ==> ' . $txt . "\n";
+        $txt = '==> '.date('Y/m/d H:i:s').' ==> '.$txt."\n";
 
         if (self::$logInFileFirst === true) {
             file_put_contents($logFile, $txt);

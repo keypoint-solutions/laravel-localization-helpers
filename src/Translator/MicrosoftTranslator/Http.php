@@ -85,7 +85,7 @@ class Http implements HttpInterface
     private $http_user_agent = 'Keypoint MicrosoftTranslator v%VERSION%';
 
     /**
-     * @param array $config
+     * @param  array  $config
      */
     public function __construct($config)
     {
@@ -99,7 +99,7 @@ class Http implements HttpInterface
     /**
      * Check the http_code in the response array and tell whether if is 200 or 201
      *
-     * @param array $result
+     * @param  array  $result
      *
      * @return bool
      */
@@ -111,8 +111,8 @@ class Http implements HttpInterface
     /**
      * GET API endpoint
      *
-     * @param string $url
-     * @param ?array $parameters
+     * @param  string  $url
+     * @param ?array  $parameters
      *
      * @return array
      */
@@ -122,9 +122,9 @@ class Http implements HttpInterface
     }
 
     /**
-     * @param string $url
-     * @param string $method
-     * @param ?array $parameters
+     * @param  string  $url
+     * @param  string  $method
+     * @param ?array  $parameters
      *
      * @return array
      */
@@ -133,35 +133,36 @@ class Http implements HttpInterface
         $request = [];
         $headers = [];
 
-        $request[CURLOPT_TIMEOUT] = (int)$this->http_timeout;
-        $request[CURLOPT_USERAGENT] = str_replace('%VERSION%', $parameters['clientVersion'] ?? '1.0.0', $this->http_user_agent);
+        $request[CURLOPT_TIMEOUT] = (int) $this->http_timeout;
+        $request[CURLOPT_USERAGENT] = str_replace('%VERSION%', $parameters['clientVersion'] ?? '1.0.0',
+            $this->http_user_agent);
         $request[CURLOPT_CUSTOMREQUEST] = $method;
 
         if ($clientKey = ($parameters['clientKey'] ?? null)) {
-            $headers[] = "Ocp-Apim-Subscription-Key: " . $clientKey;
+            $headers[] = "Ocp-Apim-Subscription-Key: ".$clientKey;
         }
 
         if ($region = ($parameters['apiRegion'] ?? null)) {
-            $headers[] = "Ocp-Apim-Subscription-Region: " . $region;
+            $headers[] = "Ocp-Apim-Subscription-Region: ".$region;
         }
 
         if (!empty($queryParameters = Arr::except($parameters, [
             'clientKey', 'apiRegion', 'clientVersion', 'text'
         ]))) {
-            $url = $url . '&' . http_build_query($queryParameters);
+            $url = $url.'&'.http_build_query($queryParameters);
         }
 
         if ($method === 'POST' && !empty($parameters['text'])) {
-            $body = json_encode(array_map(fn($t) => ['Text' => $t,], (array)$parameters['text']));
+            $body = json_encode(array_map(fn($t) => ['Text' => $t,], (array) $parameters['text']));
 
-            $headers[] = "Content-Length: " . mb_strlen($body);
+            $headers[] = "Content-Length: ".mb_strlen($body);
 
             $request[CURLOPT_POSTFIELDS] = $body;
         }
 
         $request[CURLOPT_URL] = $url;
 
-        $headers[] = "Content-Type: application/json";
+        $headers[] = "Content-Type: application/json; charset=UTF-8";
 
         if (!empty($this->http_proxy_host)) {
             $request[CURLOPT_PROXY] = $this->http_proxy_host;
@@ -179,7 +180,7 @@ class Http implements HttpInterface
             }
 
             if (!empty($this->http_proxy_user)) {
-                $request[CURLOPT_PROXYUSERPWD] = $this->http_proxy_user . ':' . $this->http_proxy_pass;
+                $request[CURLOPT_PROXYUSERPWD] = $this->http_proxy_user.':'.$this->http_proxy_pass;
             }
         }
 
@@ -190,7 +191,7 @@ class Http implements HttpInterface
         @list($result, $status_code, $error, $errno) = $this->execCurl($request);
 
         $end = microtime(true);
-        $duration = (int)round(($end - $start) * 1000);
+        $duration = (int) round(($end - $start) * 1000);
 
         if ($errno === 0) {
             $return = [
@@ -214,7 +215,7 @@ class Http implements HttpInterface
      *
      * Made public for unit tests, you can publicly call it but this method is not really interesting!
      *
-     * @param array $config
+     * @param  array  $config
      *
      * @return array
      */
@@ -224,8 +225,7 @@ class Http implements HttpInterface
         $config[CURLOPT_SSL_VERIFYPEER] = false;
         $config[CURLOPT_RETURNTRANSFER] = true;
 
-        if (defined('CURLOPT_IPRESOLVE')) // PHP5.3
-        {
+        if (defined('CURLOPT_IPRESOLVE')) { // PHP5.3
             $config[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V4;
         }
 
@@ -248,8 +248,8 @@ class Http implements HttpInterface
     /**
      * POST API endpoint
      *
-     * @param string $url
-     * @param ?array $parameters
+     * @param  string  $url
+     * @param ?array  $parameters
      *
      * @return array
      */
@@ -261,8 +261,8 @@ class Http implements HttpInterface
     /**
      * PUT API endpoint
      *
-     * @param string $url
-     * @param string|array $parameters
+     * @param  string  $url
+     * @param  string|array  $parameters
      *
      * @return array
      */
@@ -274,8 +274,8 @@ class Http implements HttpInterface
     /**
      * DELETE API endpoint
      *
-     * @param string $url
-     * @param string|array $parameters
+     * @param  string  $url
+     * @param  string|array  $parameters
      *
      * @return array
      */

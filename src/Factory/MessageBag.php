@@ -1,4 +1,6 @@
-<?php namespace Keypoint\LaravelLocalizationHelpers\Factory;
+<?php
+
+namespace Keypoint\LaravelLocalizationHelpers\Factory;
 
 class MessageBag implements MessageBagInterface
 {
@@ -43,7 +45,7 @@ class MessageBag implements MessageBagInterface
     /**
      * Get the message type of a message get by getMessages
      *
-     * @param array $message
+     * @param  array  $message
      *
      * @return mixed
      */
@@ -56,7 +58,7 @@ class MessageBag implements MessageBagInterface
     /**
      * Get the message text
      *
-     * @param array $message
+     * @param  array  $message
      *
      * @return mixed
      */
@@ -69,7 +71,7 @@ class MessageBag implements MessageBagInterface
     /**
      * Add a simple message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -85,7 +87,7 @@ class MessageBag implements MessageBagInterface
     /**
      * Add an info message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -101,7 +103,7 @@ class MessageBag implements MessageBagInterface
     /**
      * Add a comment message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -117,7 +119,7 @@ class MessageBag implements MessageBagInterface
     /**
      * Add a question message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -133,7 +135,7 @@ class MessageBag implements MessageBagInterface
     /**
      * Add an error message
      *
-     * @param string $s the message to display
+     * @param  string  $s  the message to display
      *
      * @return  void
      */
@@ -149,7 +151,7 @@ class MessageBag implements MessageBagInterface
     /**
      * Trim and remove all XML tags
      *
-     * @param string $m the message to clean
+     * @param  string  $m  the message to clean
      *
      * @return string
      */

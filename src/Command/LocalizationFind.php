@@ -41,14 +41,14 @@ class LocalizationFind extends LocalizationAbstract
     /**
      * Create a new command instance.
      *
-     * @param \Illuminate\Config\Repository $configRepository
+     * @param  \Illuminate\Config\Repository  $configRepository
      */
     public function __construct(Repository $configRepository)
     {
         parent::__construct($configRepository);
 
-        $this->folders = config(Localization::PREFIX_LARAVEL_CONFIG . 'folders');
-        $this->trans_methods = config(Localization::PREFIX_LARAVEL_CONFIG . 'trans_methods');
+        $this->folders = config(Localization::PREFIX_LARAVEL_CONFIG.'folders');
+        $this->trans_methods = config(Localization::PREFIX_LARAVEL_CONFIG.'trans_methods');
     }
 
     /**
@@ -68,7 +68,7 @@ class LocalizationFind extends LocalizationAbstract
             $this->writeLine("Lemmas will be searched in the following directories:");
 
             foreach ($folders as $path) {
-                $this->writeLine('    <info>' . $path . '</info>');
+                $this->writeLine('    <info>'.$path.'</info>');
             }
 
             $this->writeLine('');
@@ -77,12 +77,13 @@ class LocalizationFind extends LocalizationAbstract
         ////////////////////////////////
         // Parse all lemmas from code //
         ////////////////////////////////
-        $files = $this->manager->findLemma($lemma, $folders, $this->trans_methods, $this->option('regex'), $this->option('short'));
+        $files = $this->manager->findLemma($lemma, $folders, $this->trans_methods, $this->option('regex'),
+            $this->option('short'));
 
         if ((is_array($files)) && (count($files) > 0)) {
-            $this->writeLine('Lemma <info>' . $lemma . '</info> has been found in:');
+            $this->writeLine('Lemma <info>'.$lemma.'</info> has been found in:');
             foreach ($files as $file) {
-                $this->writeLine('    <info>' . $file . '</info>');
+                $this->writeLine('    <info>'.$file.'</info>');
             }
 
             return self::SUCCESS;
