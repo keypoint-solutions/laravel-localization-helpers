@@ -58,11 +58,10 @@ class Client
         array $options = []
     ): string|array {
         if (($options['noPlaceholderReplacement'] ?? false)) {
-            $query = $text;
+            $query = (array) $text;
         } else {
             $query = array_map(fn($q) => preg_replace('/(:[a-zA-Z0-9_.-]+)/', '<span class="notranslate">$1</span>',
                 $q), (array) $text);
-            $query = count($query) > 1 ? $query : (head($query) ?: '');
         }
 
         if (!$query) {
