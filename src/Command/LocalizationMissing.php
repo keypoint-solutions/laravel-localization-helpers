@@ -88,6 +88,8 @@ class LocalizationMissing extends LocalizationAbstract
      */
     protected $obsolete_array_key = 'LLH:obsolete';
 
+    protected $todo_prefix = 'TODO: ';
+
     /**
      * The dot notation split regex
      *
@@ -105,6 +107,8 @@ class LocalizationMissing extends LocalizationAbstract
      * @since 2.x.6
      */
     protected $json_languages = null;
+
+    protected $encode_json_unicode_characters = true;
 
     /**
      * Create a new command instance.
@@ -135,6 +139,10 @@ class LocalizationMissing extends LocalizationAbstract
         // but users may want to set it to null to keep the old buggy behaviour
         $this->obsolete_array_key = config(Localization::PREFIX_LARAVEL_CONFIG.'obsolete_array_key',
             $this->obsolete_array_key);
+
+        $this->todo_prefix = config(Localization::PREFIX_LARAVEL_CONFIG.'todo_prefix', $this->todo_prefix);
+
+        $this->encode_json_unicode_characters = config(Localization::PREFIX_LARAVEL_CONFIG.'encode_json_unicode_characters', $this->encode_json_unicode_characters);
     }
 
     /**
@@ -416,7 +424,7 @@ class LocalizationMissing extends LocalizationAbstract
                             $translation = null;
                         } else {
                             if ($lang == App::getFallbackLocale()) {
-                                $translation = str_replace('🚩%LEMMA', $translation, $this->option('new-value'));
+                                $translation = str_replace($this->todo_prefix.'%LEMMA', $translation, $this->option('new-value'));
                             } else {
                                 $translation = str_replace('%LEMMA', $translation, $this->option('new-value'));
                             }
@@ -506,7 +514,7 @@ class LocalizationMissing extends LocalizationAbstract
                     }
 
                     $content = $needsJSONOutput ? json_encode($final_lemmas,
-                        JSON_PRETTY_PRINT) : var_export($final_lemmas, true);
+                        JSON_PRETTY_PRINT|($this->encode_json_unicode_characters ? 0 : JSON_UNESCAPED_UNICODE)) : var_export($final_lemmas, true);
 
                     if (!$needsJSONOutput) {
                         $content = preg_replace("@'LLH___COMMENT___LLH[0-9]*' => '(.*)',@", '// $1', $content);
@@ -669,7 +677,7 @@ class LocalizationMissing extends LocalizationAbstract
                 'l',
                 InputOption::VALUE_OPTIONAL,
                 'Value of new found lemmas (use %LEMMA for the lemma value or translation). Set it to null to provide translation fallbacks.',
-                '🚩%LEMMA',
+                $this->todo_prefix.'%LEMMA',
             ],
             ['no-backup', 'b', InputOption::VALUE_NONE, 'Do not backup lang file (be careful, I am not a good coder)'],
             ['no-comment', 'c', InputOption::VALUE_NONE, 'Do not add comments in lang files for lemma definition'],
