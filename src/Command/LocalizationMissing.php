@@ -119,6 +119,11 @@ class LocalizationMissing extends LocalizationAbstract
     {
         parent::__construct($configRepository);
 
+        $this->initConfigOptions();
+    }
+
+    protected function initConfigOptions()
+    {
         $this->trans_methods = config(Localization::PREFIX_LARAVEL_CONFIG.'trans_methods');
         $this->folders = config(Localization::PREFIX_LARAVEL_CONFIG.'folders');
         $this->ignore_lang_files = config(Localization::PREFIX_LARAVEL_CONFIG.'ignore_lang_files');
@@ -667,6 +672,8 @@ class LocalizationMissing extends LocalizationAbstract
      */
     protected function getOptions(): array
     {
+        $this->initConfigOptions();
+
         return [
             ['dry-run', 'r', InputOption::VALUE_NONE, 'Dry run: run process but do not write anything'],
             ['editor', 'e', InputOption::VALUE_NONE, 'Open files which need to be edited at the end of the process'],
