@@ -199,7 +199,7 @@ class LocalizationMissing extends LocalizationAbstract
         // Convert dot lemmas to structured lemmas //
         /////////////////////////////////////////////
         if ($this->option('output-flat')) {
-            $lemmas_structured = $this->manager->convertLemmaToFlatArray($lemmas);
+            $lemmas_structured = $this->manager->convertLemmaToStructuredArray($lemmas, $this->dot_notation_split_regex, 2);
         } else {
             $lemmas_structured = $this->manager->convertLemmaToStructuredArray($lemmas, $this->dot_notation_split_regex,
                 null);
@@ -416,7 +416,7 @@ class LocalizationMissing extends LocalizationAbstract
                             $translation = null;
                         } else {
                             if ($lang == App::getFallbackLocale()) {
-                                $translation = str_replace('TODO: %LEMMA', $translation, $this->option('new-value'));
+                                $translation = str_replace('🚩%LEMMA', $translation, $this->option('new-value'));
                             } else {
                                 $translation = str_replace('%LEMMA', $translation, $this->option('new-value'));
                             }
@@ -669,7 +669,7 @@ class LocalizationMissing extends LocalizationAbstract
                 'l',
                 InputOption::VALUE_OPTIONAL,
                 'Value of new found lemmas (use %LEMMA for the lemma value or translation). Set it to null to provide translation fallbacks.',
-                'TODO: %LEMMA',
+                '🚩%LEMMA',
             ],
             ['no-backup', 'b', InputOption::VALUE_NONE, 'Do not backup lang file (be careful, I am not a good coder)'],
             ['no-comment', 'c', InputOption::VALUE_NONE, 'Do not add comments in lang files for lemma definition'],
