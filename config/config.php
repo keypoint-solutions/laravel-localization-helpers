@@ -121,22 +121,22 @@ return [
     | that there are dynamic because it cannot guess them.
     |
     | Example :
-    |   - in PHP blade code : <span>{{{ trans( "message.user.dynamo.$s" ) }}}</span>
+    |   - in PHP blade code : <span>{{{ trans( "message.user.dynamic.$s" ) }}}</span>
     |   - in lang/en.message.php :
-    |     - 'user' => array(
-    |         'dynamo' => array(
+    |     - 'user' => [
+    |         'dynamic' => [
     |           'lastname'  => 'Family name',
     |           'firstname' => 'Name',
     |           'email'     => 'Email address',
     |           ...
-    |   Then you can define in this parameter value dynamo for example so that
+    |   Then you can define in this parameter value dynamic for example so that
     |   Localization::Missing will not exclude lastname, firstname and email from
     |   translation files.
     |
     */
     'never_obsolete_keys' => [
-        'dynamic',
-        'fields',
+        'dynamic.',
+        'fields.',
     ],
 
     /*

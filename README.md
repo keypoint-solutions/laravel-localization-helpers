@@ -1,7 +1,7 @@
 Laravel Localization Helpers
 ============================
 
-[![Total Downloads](https://poser.pugx.org/schniper/laravel-localization-helpers/downloads.svg)](https://packagist.org/packages/schniper/laravel-localization-helpers)
+[![Total Downloads](https://poser.pugx.org/keypoint-solutions/laravel-localization-helpers/downloads.svg)](https://packagist.org/packages/keypoint-solutions/laravel-localization-helpers)
 
 ## This branch is the current dev branch
 
@@ -30,7 +30,7 @@ LLH is a set of artisan commands to manage translations in your Laravel project.
 
 - Add the following line in the `require-dev` array of the `composer.json` file and replace the version if needed according to your Laravel version:
     ```php
-    "schniper/laravel-localization-helpers" : "3.0.*"
+    "keypoint-solutions/laravel-localization-helpers" : "3.0.*"
     ```
 
 - Update your installation : `composer update`
@@ -270,7 +270,7 @@ php artisan localization:clear -d 7
 
 ## 4. Support
 
-Use the [github issue tool](https://github.com/schniper/laravel-localization-helpers/issues) to open an issue or ask for something.
+Use the [github issue tool](https://github.com/keypoint-solutions/laravel-localization-helpers/issues) to open an issue or ask for something.
 
 ## 5. Contribute
 

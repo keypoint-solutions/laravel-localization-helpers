@@ -463,7 +463,7 @@ class LocalizationMissing extends LocalizationAbstract
                     // Remove all dynamic fields
                     foreach ($obsolete_lemmas as $key => $value) {
                         foreach ($this->never_obsolete_keys as $remove) {
-                            if ((strpos($key, '.'.$remove.'.') !== false) || str_starts_with($key, $remove.'.')) {
+                            if ((strpos($key, '.'.$remove) !== false) || str_starts_with($key, $remove)) {
                                 if ($this->option('verbose')) {
                                     $this->writeLine("        <comment>".$key."</comment> is protected as a dynamic lemma");
                                 }
