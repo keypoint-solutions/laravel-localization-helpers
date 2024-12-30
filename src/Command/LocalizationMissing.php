@@ -159,7 +159,7 @@ class LocalizationMissing extends LocalizationAbstract
     public function handle(): int
     {
         $folders = $this->manager->getPath($this->folders);
-        $this->display = !$this->option('silent');
+        $this->display = !$this->option('quiet');
         $extension = $this->option('php-file-extension');
         $obsolete_prefix = (empty($this->obsolete_array_key)) ? '' : $this->obsolete_array_key.'.';
 
@@ -562,7 +562,7 @@ class LocalizationMissing extends LocalizationAbstract
         // Silent mode                           //
         // only return an exit code on new lemma //
         ///////////////////////////////////////////
-        if ($this->option('silent')) {
+        if ($this->option('quiet')) {
             if ($there_are_new === true) {
                 return self::ERROR;
             } else {
@@ -698,7 +698,7 @@ class LocalizationMissing extends LocalizationAbstract
                 'Output arrays are flat (do not use sub-arrays and keep dots in lemma)'
             ],
             [
-                'silent', 's', InputOption::VALUE_NONE,
+                'quiet', 'q', InputOption::VALUE_NONE,
                 'Use this option to only return the exit code (use $? in shell to know whether there are missing lemma or nt)'
             ],
             ['php-file-extension', 'x', InputOption::VALUE_OPTIONAL, 'PHP file extension', 'php'],
