@@ -23,14 +23,13 @@ LLH is a set of artisan commands to manage translations in your Laravel project.
 
 - Choose your version according to the version compatibility matrix:
 
-| Laravel | Lumen | Package
-|:--------|:------|:----------
-| 8.0.x   | 8.0.x | main
-| 9.0.x   | 9.0.x | main
+| Laravel    | Lumen      | Package
+|:-----------|:-----------|:----------
+| 8.x - 12.x | 8.x - 12.x | main
 
 - Add the following line in the `require-dev` array of the `composer.json` file and replace the version if needed according to your Laravel version:
     ```php
-    "keypoint-solutions/laravel-localization-helpers" : "3.0.*"
+    "keypoint-solutions/laravel-localization-helpers" : "^7.2"
     ```
 
 - Update your installation : `composer update`
